@@ -24,7 +24,6 @@
         "iconPath": "icons/tray-icon.ico",
         "iconAsTemplate": true,
         "showMenuOnLeftClick": false
-      },
-      "windows": []
+      }
     }
   }

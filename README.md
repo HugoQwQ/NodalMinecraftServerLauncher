@@ -36,9 +36,21 @@
 
 本项目使用 Tauri + Vue3 开发。
 
-## 许可证
+## 构建说明
 
-[待补充]
+### 环境准备
+
+1. 安装 [Node.js](https://nodejs.org/) (推荐 v18 或更高版本)
+2. 安装 [Rust](https://www.rust-lang.org/tools/install)
+3. 安装 [Visual Studio Code](https://code.visualstudio.com)
+
+### 构建步骤
+
+1. 克隆仓库
+
+
+## 许可证
+[GNU GENERAL PUBLIC LICENSE](LICENSE)
 
 ## 贡献指南
 

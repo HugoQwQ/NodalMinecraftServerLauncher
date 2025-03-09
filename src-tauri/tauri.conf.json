@@ -13,12 +13,22 @@
     "windows": [
       {
         "title": "NodalMinecraftServerLauncher",
-        "width": 800,
+        "width": 1000,
         "height": 600
       }
     ],
     "security": {
       "csp": null
+    }
+  },
+  "plugins": {
+    "windows": {
+      "installMode": "basicUi"
+    },
+    "deep-link": {
+      "desktop": {
+        "schemes": ["nmsl", "nodal-msl"]
+      }
     }
   },
   "bundle": {
