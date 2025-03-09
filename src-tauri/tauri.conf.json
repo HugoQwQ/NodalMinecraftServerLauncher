@@ -1,15 +1,18 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-  "productName": "nmsl",
-  "version": "0.1.0",
-  "identifier": "io.nmsl.app",
   "build": {
     "beforeDevCommand": "yarn dev",
-    "devUrl": "http://localhost:1420",
     "beforeBuildCommand": "yarn build",
-    "frontendDist": "../dist"
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:1420"
   },
+  "identifier": "io.nmsl.app",
+  "productName": "NodalMinecraftServerLauncher",
+  "version": "0.1.0",
   "app": {
+    "security": {
+      "csp": null
+    },
     "windows": [
       {
         "title": "NodalMinecraftServerLauncher",
@@ -25,25 +28,10 @@
         "width": 900,
         "height": 550,
         "resizable": false,
-        "decorations": false,
-        "alwaysOnTop": true,
-        "maximized": true,
-        "visible": false
+        "visible": false,
+        "url": "http://localhost:1420/nmslinstancemanage.html"
       }
-    ],
-    "security": {
-      "csp": null
-    }
-  },
-  "plugins": {
-    "windows": {
-      "installMode": "basicUi"
-    },
-    "deep-link": {
-      "desktop": {
-        "schemes": ["nmsl", "nodal-msl"]
-      }
-    }
+    ]
   },
   "bundle": {
     "active": true,

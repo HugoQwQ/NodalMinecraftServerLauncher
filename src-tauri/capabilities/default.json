@@ -7,6 +7,16 @@
   ],
   "permissions": [
     "core:default",
+    "core:window:allow-create",
+    "core:app:allow-app-show",
+    "core:app:allow-app-hide",
+    "core:app:allow-set-app-theme",
+    "core:app:deny-name",
+    "core:image:allow-new",
+    "core:menu:allow-get",
+    "core:window:allow-set-title",
+    "core:window:allow-set-focus",
+    "core:window:allow-show",
     "opener:default",
     "deep-link:default",
     "os:default"

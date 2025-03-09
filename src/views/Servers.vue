@@ -45,6 +45,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { Window } from '@tauri-apps/api/window'
 import type { ServerConfig } from '../types'
 
 // 模拟服务器数据
@@ -99,9 +100,17 @@ const handleServerAction = (server: ServerConfig) => {
   console.log(`${server.status === 'online' ? '停止' : '启动'}服务器`, server.id)
 }
 
-const handleServerSettings = (server: ServerConfig) => {
-  // TODO: 实现服务器设置逻辑
-  console.log('服务器设置', server.id)
+const handleServerSettings = async (server: ServerConfig) => {
+  try {
+    const instanceWindow = await Window.getByLabel('nmslinstancemanage')
+    if (instanceWindow) {
+      await instanceWindow.show()
+      await instanceWindow.setFocus()
+      await instanceWindow.setTitle(`${server.name} - 实例管理`)
+    }
+  } catch (error) {
+    console.error('打开实例管理窗口失败:', error)
+  }
 }
 </script>
 
