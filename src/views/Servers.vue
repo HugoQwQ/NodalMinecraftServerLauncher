@@ -2,10 +2,15 @@
   <div class="servers">
     <div class="header">
       <h1>服务器管理</h1>
-      <button class="btn btn-primary" @click="handleAddServer">
-        <i class="fas fa-plus"></i>
-        添加服务器
-      </button>
+      <div class="header-actions">
+        <button class="btn btn-icon" @click="refreshServers">
+          <i class="fas fa-sync-alt"></i>
+        </button>
+        <button class="btn btn-primary" @click="handleAddServer">
+          <i class="fas fa-plus"></i>
+          添加实例
+        </button>
+      </div>
     </div>
 
     <div class="server-grid">
@@ -15,7 +20,7 @@
           <span class="status" :class="server.status">{{ server.status === 'online' ? '在线' : '离线' }}</span>
         </div>
         <div class="server-info">
-          <p><i class="fas fa-globe"></i> {{ server.host }}:{{ server.port }}</p>
+          <p><i class="fas fa-globe"></i> 服务器端口: {{ server.host }}:{{ server.port }}</p>
           <p><i class="fas fa-users"></i> 在线玩家：{{ server.currentPlayers }}/{{ server.maxPlayers }}</p>
           <p><i class="fas fa-memory"></i> 内存：{{ formatMemory(server.memory.allocated) }}/{{ formatMemory(server.memory.max) }}</p>
         </div>
@@ -79,6 +84,11 @@ const formatMemory = (bytes: number): string => {
   return `${mb}MB`
 }
 
+const refreshServers = async () => {
+  // TODO: 实现从后端获取服务器列表的逻辑
+  console.log('刷新服务器列表')
+}
+
 const handleAddServer = () => {
   // TODO: 实现添加服务器逻辑
   console.log('添加服务器')
@@ -102,6 +112,12 @@ const handleServerSettings = (server: ServerConfig) => {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1.5rem;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
   }
 
   .server-grid {
@@ -206,5 +222,28 @@ const handleServerSettings = (server: ServerConfig) => {
 .server-actions .btn.settings:hover {
   background-color: var(--primary-color);
   color: white;
+}
+
+.btn-icon {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  transition: all var(--transition-speed) ease;
+}
+
+.btn-icon:hover {
+  background-color: var(--border-color);
+  transform: rotate(180deg);
+}
+
+.btn-icon i {
+  font-size: 1rem;
 }
 </style> 

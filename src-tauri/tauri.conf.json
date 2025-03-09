@@ -13,8 +13,22 @@
     "windows": [
       {
         "title": "NodalMinecraftServerLauncher",
+        "label": "main",
         "width": 1000,
-        "height": 600
+        "height": 600,
+        "resizable": true,
+        "decorations": true
+      },
+      {
+        "title": "NMSL实例管理",
+        "label": "nmslinstancemanage",
+        "width": 900,
+        "height": 550,
+        "resizable": false,
+        "decorations": false,
+        "alwaysOnTop": true,
+        "maximized": true,
+        "visible": false
       }
     ],
     "security": {

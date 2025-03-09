@@ -1,8 +1,21 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import Sidebar from './components/Sidebar.vue'
 
-const isCollapsed = ref(false)
+const isCollapsed = ref(true)
+
+const handleContextMenu = (e: MouseEvent) => {
+  e.preventDefault()
+}
+
+onMounted(() => {
+  document.addEventListener('contextmenu', handleContextMenu)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('contextmenu', handleContextMenu)
+})
+
 </script>
 
 <template>

@@ -14,6 +14,8 @@
         :to="item.path"
         class="nav-item"
         :class="{ active: currentPath === item.path }"
+        @mouseenter="showTooltip($event, item)"
+        @mouseleave="hideTooltip"
       >
         <i :class="['fas', item.icon]"></i>
         <span class="nav-text" v-show="!isCollapsed">{{ item.name }}</span>
@@ -23,6 +25,17 @@
     <div class="sidebar-footer" v-show="!isCollapsed">
     </div>
   </div>
+
+  <Teleport to="body">
+    <div 
+      v-if="isCollapsed && tooltipVisible" 
+      class="global-tooltip"
+      :class="{ active: isActiveRoute }"
+      :style="tooltipStyle"
+    >
+      {{ tooltipText }}
+    </div>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
@@ -40,14 +53,41 @@ const emit = defineEmits<{
 const route = useRoute()
 const isCollapsed = ref(props.modelValue ?? false)
 
+const tooltipVisible = ref(false)
+const tooltipText = ref('')
+const tooltipStyle = ref({
+  top: '0px',
+  left: '0px'
+})
+const isActiveRoute = ref(false)
+
 const menuItems = [
   { name: '仪表盘', path: '/', icon: 'fa-tachometer-alt' },
-  { name: '服务器', path: '/servers', icon: 'fa-server' },
+  { name: '实例', path: '/servers', icon: 'fa-server' },
   { name: '插件', path: '/plugins', icon: 'fa-puzzle-piece' },
   { name: '设置', path: '/settings', icon: 'fa-cog' }
 ]
 
 const currentPath = computed(() => route.path)
+
+const showTooltip = (event: MouseEvent, item: { name: string, path: string }) => {
+  if (!isCollapsed.value) return
+
+  const target = event.currentTarget as HTMLElement
+  const rect = target.getBoundingClientRect()
+  
+  tooltipText.value = item.name
+  tooltipStyle.value = {
+    top: `${rect.top + rect.height / 2}px`,
+    left: `${rect.right + 10}px`
+  }
+  isActiveRoute.value = currentPath.value === item.path
+  tooltipVisible.value = true
+}
+
+const hideTooltip = () => {
+  tooltipVisible.value = false
+}
 
 const toggleCollapse = () => {
   isCollapsed.value = !isCollapsed.value
@@ -61,6 +101,59 @@ watch(() => props.modelValue, (newValue) => {
 })
 </script>
 
+<style>
+.global-tooltip {
+  position: fixed;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--border-color);
+  pointer-events: none;
+  z-index: 9999;
+  transform: translateY(-50%);
+}
+
+.global-tooltip::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-style: solid;
+  border-width: 6px 6px 6px 0;
+  border-color: transparent var(--border-color) transparent transparent;
+}
+
+.global-tooltip::after {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-style: solid;
+  border-width: 5px 5px 5px 0;
+  border-color: transparent var(--bg-color) transparent transparent;
+}
+
+.global-tooltip.active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.global-tooltip.active::before {
+  border-right-color: var(--primary-color);
+}
+
+.global-tooltip.active::after {
+  border-right-color: var(--primary-color);
+}
+</style>
+
 <style scoped>
 .sidebar {
   width: 250px;
@@ -73,7 +166,7 @@ watch(() => props.modelValue, (newValue) => {
   transition: width var(--transition-speed) ease;
   display: flex;
   flex-direction: column;
-  z-index: 1000;
+  z-index: 100;
   overflow: hidden;
 }
 

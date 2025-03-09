@@ -33,6 +33,19 @@
         </div>
       </div>
     </div>
+    <div class="card">
+        <h3>公告</h3>
+        <div class="status-info">
+          <i class="fas fa-bullhorn"></i>
+          <div class="info">
+            <p>NMSL，启动！</p>
+            <br>
+            <p>软件交流群：</p>
+            <p>一群：1234567890</p>
+            <p>二群：1234567890</p>
+          </div>
+        </div>
+      </div>
   </div>
 </template>
 

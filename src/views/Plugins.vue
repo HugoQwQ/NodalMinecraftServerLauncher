@@ -30,11 +30,11 @@
         <p class="plugin-description">这是一个示例插件描述，展示插件的主要功能和特点。</p>
         <div class="plugin-actions">
           <button class="btn">
-            <span class="material-icons">settings</span>
+            <i class="fas fa-gear"></i>
             配置
           </button>
           <button class="btn">
-            <span class="material-icons">delete</span>
+            <i class="fas fa-trash"></i>
             删除
           </button>
         </div>
