@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./src-tauri/icons/icon.png" alt="NMSL Logo">
+  <img src="./src-tauri/icons/128x128.png" alt="NMSL Logo">
   
   # NodalMinecraftServerLauncher (NMSL)
 </div>
