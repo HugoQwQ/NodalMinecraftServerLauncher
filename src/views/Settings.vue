@@ -77,7 +77,7 @@
 import { ref, onMounted, computed } from 'vue'
 import settingsConfig from '../assets/settings.json'
 import { useTheme } from '../utils/theme'
-// import { invoke } from '@tauri-apps/api'
+import { invoke } from '@tauri-apps/api/tauri'
 
 interface BaseSetting {
   name: string;
@@ -141,76 +141,173 @@ const currentTheme = computed(() => {
 const settings = ref<SettingsSection[]>(settingsConfig.settings as SettingsSection[])
 const settingsData = ref<Record<string, any>>({})
 
-const handleThemeChange = (value: string) => {
+const handleThemeChange = async (value: string) => {
+  let themeValue: string
   switch (value) {
     case '深色':
+      themeValue = 'dark'
       setTheme('dark')
       break
     case '浅色':
+      themeValue = 'light'
       setTheme('light')
       break
     default:
+      themeValue = 'system'
       setTheme('system')
+  }
+  
+  try {
+    await invoke('save_config_command', {
+      section: 'theme',
+      key: 'theme',
+      value: themeValue
+    })
+  } catch (error) {
+    console.error('保存主题设置失败:', error)
   }
 }
 
-const handleSettingChange = (item: Setting, value: any) => {
+const handleSettingChange = async (item: Setting, value: any) => {
   settingsData.value[item.name] = value
   
-  // 特殊处理主题相关设置
-  switch (item.name) {
-    case '主题模式':
-      handleThemeChange(value)
-      break
-    case '主题颜色':
-      setAccentColor(value)
-      break
-    case '跟随系统主题色':
-      toggleSystemAccent(value)
-      break
+  try {
+    // 特殊处理主题相关设置
+    switch (item.name) {
+      case '主题模式':
+        await handleThemeChange(value)
+        break
+      case '主题颜色':
+        setAccentColor(value)
+        await invoke('save_config_command', {
+          section: 'theme',
+          key: 'accent_color',
+          value
+        })
+        break
+      case '跟随系统主题色':
+        toggleSystemAccent(value)
+        await invoke('save_config_command', {
+          section: 'theme',
+          key: 'follow_system_accent',
+          value: value.toString()
+        })
+        break
+      case '自动启动':
+        await invoke('save_config_command', {
+          section: 'normal',
+          key: 'autostartup',
+          value: value.toString()
+        })
+        break
+      case '控制台编码':
+        await invoke('save_config_command', {
+          section: 'console',
+          key: 'encoding',
+          value
+        })
+        break
+      case '自动同意EULA':
+        await invoke('save_config_command', {
+          section: 'instance',
+          key: 'auto_accept_eula',
+          value: value.toString()
+        })
+        break
+      case '崩溃自动重启':
+        await invoke('save_config_command', {
+          section: 'instance',
+          key: 'auto_restart_on_crash',
+          value: value.toString()
+        })
+        break
+      case '下载源':
+        await invoke('save_config_command', {
+          section: 'download',
+          key: 'source',
+          value
+        })
+        break
+      case 'Aria2 下载':
+        await invoke('save_config_command', {
+          section: 'download',
+          key: 'aria2_enabled',
+          value: value.toString()
+        })
+        break
+      case 'Aria2 线程数':
+        await invoke('save_config_command', {
+          section: 'download',
+          key: 'aria2_threads',
+          value: value.toString()
+        })
+        break
+    }
+  } catch (error) {
+    console.error('保存设置失败:', error)
   }
   
   saveSettings()
 }
 
 // 初始化设置数据
-onMounted(() => {
-  // 从settings.json中获取默认值
-  settings.value.forEach(section => {
-    section.items.forEach(item => {
-      if (item.name === '主题模式') {
-        settingsData.value[item.name] = currentTheme.value
-      } else {
-        settingsData.value[item.name] = item.default
-      }
+onMounted(async () => {
+  try {
+    // 从config.toml加载配置
+    const config = await invoke('load_config_command')
+    
+    // 设置主题
+    const themeMode = config.theme.theme
+    switch (themeMode) {
+      case 'dark':
+        settingsData.value['主题模式'] = '深色'
+        setTheme('dark')
+        break
+      case 'light':
+        settingsData.value['主题模式'] = '浅色'
+        setTheme('light')
+        break
+      default:
+        settingsData.value['主题模式'] = '跟随系统'
+        setTheme('system')
+    }
+    
+    // 设置主题色
+    const accentColor = config.theme.accent_color
+    settingsData.value['主题颜色'] = accentColor
+    setAccentColor(accentColor)
+    
+    // 设置系统主题色跟随
+    const followSystemAccent = config.theme.follow_system_accent
+    settingsData.value['跟随系统主题色'] = followSystemAccent
+    toggleSystemAccent(followSystemAccent)
+    
+    // 设置其他配置
+    settingsData.value['自动启动'] = config.normal.autostartup
+    settingsData.value['控制台编码'] = config.console.encoding
+    settingsData.value['自动同意EULA'] = config.instance.auto_accept_eula
+    settingsData.value['崩溃自动重启'] = config.instance.auto_restart_on_crash
+    settingsData.value['下载源'] = config.download.source
+    settingsData.value['Aria2 下载'] = config.download.aria2_enabled
+    settingsData.value['Aria2 线程数'] = config.download.aria2_threads
+    
+  } catch (error) {
+    console.error('加载配置失败:', error)
+    
+    // 如果加载失败，使用默认值
+    settings.value.forEach(section => {
+      section.items.forEach(item => {
+        if (item.name === '主题模式') {
+          settingsData.value[item.name] = currentTheme.value
+        } else {
+          settingsData.value[item.name] = item.default
+        }
+      })
     })
-  })
-  
-  // 从本地存储加载保存的设置
-  const savedSettings = localStorage.getItem('app-settings')
-  if (savedSettings) {
-    const parsed = JSON.parse(savedSettings)
-    Object.assign(settingsData.value, parsed)
-    
-    // 应用已保存的主题设置
-    const themeMode = parsed['主题模式']
-    if (themeMode) {
-      handleThemeChange(themeMode)
-    }
-    
-    const themeColor = parsed['主题颜色']
-    if (themeColor) {
-      setAccentColor(themeColor)
-    }
-    
-    const followSystem = parsed['跟随系统主题色']
-    if (followSystem !== undefined) {
-      toggleSystemAccent(followSystem)
-    }
   }
 })
 
-// 保存设置
+// 保存到localStorage作为备份
 const saveSettings = () => {
   localStorage.setItem('app-settings', JSON.stringify(settingsData.value))
 }

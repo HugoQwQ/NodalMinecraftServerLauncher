@@ -2,9 +2,9 @@
 autostartup = true
 
 [theme]
-theme = "light"
-accent_color = "#007bff"
-
+theme = "system"
+accent_color = "#0078D4"
+follow_system_accent = false
 
 [console]
 encoding = "ANSI"
