@@ -17,8 +17,6 @@
     "core:window:allow-set-title",
     "core:window:allow-set-focus",
     "core:window:allow-show",
-    "opener:default",
-    "deep-link:default",
-    "os:default"
+    "deep-link:default"
   ]
 }

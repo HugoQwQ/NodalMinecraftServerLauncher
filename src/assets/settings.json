@@ -1,0 +1,105 @@
+{
+    "settings": [
+            {
+                "name": "常规设置",
+                "items": 
+                [
+                    {
+                        "name": "自动启动",
+                        "description": "开机时自动启动NMSL",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    {
+                        "name": "控制台编码",
+                        "description": "控制台编码",
+                        "type": "combo",
+                        "options": [
+                            "UTF-8",
+                            "GBK",
+                            "ANSI"
+                        ],
+                        "default": "ANSI"
+                    }
+                ]
+            },
+
+            {
+                "name": "实例设置",
+                "items": [
+                    {
+                        "name": "自动同意EULA",
+                        "description": "创建实例时自动同意Minecraft EULA",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    {
+                        "name": "崩溃自动重启",
+                        "description": "服务器崩溃后将自动重启",
+                        "type": "boolean",
+                        "default": false
+                    }
+                ]
+            },
+            
+            {
+                "name": "下载设置",
+                "items": [
+                    {
+                        "name": "下载源",
+                        "description": "选择下载源",
+                        "type": "combo",
+                        "default": "FastMirror镜像源",
+                        "options": [
+                            "官方源",
+                            "FastMirror镜像源",
+                            "MCSL-Sync镜像源",
+                            "极星·镜像源",
+                            "Akira Cloud 镜像源"
+                        ]
+                    },
+                    {
+                        "name": "Aria2 下载",
+                        "description": "启用Aria2下载",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    {
+                        "name": "Aria2 线程数",
+                        "description": "配置Aria2下载线程数",
+                        "type": "slider",
+                        "min": 1,
+                        "max": 128,
+                        "step": 1,
+                        "default": 6
+                    }
+                ]
+            },
+
+            {
+                "name": "主题设置",
+                "items": [
+                    {
+                        "name": "主题模式",
+                        "description": "选择应用的显示主题",
+                        "type": "button",
+                        "options": ["跟随系统", "浅色", "深色"],
+                        "default": "跟随系统"
+                    },
+                    {
+                        "name": "主题颜色",
+                        "description": "自定义应用的主题色",
+                        "type": "color",
+                        "default": "#0078D4"
+                    },
+                    {
+                        "name": "跟随系统主题色",
+                        "description": "使用系统主题色（需要操作系统支持）",
+                        "type": "boolean",
+                        "default": false
+                    }
+                ]
+            }
+        ]
+}
+

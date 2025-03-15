@@ -1,0 +1,21 @@
+[normal]
+autostartup = true
+
+[theme]
+theme = "light"
+accent_color = "#007bff"
+
+
+[console]
+encoding = "ANSI"
+
+[download]
+source = "FastMirror镜像源"
+aria2_enabled = true
+aria2_threads = 6
+
+[instance]
+auto_accept_eula = false
+auto_restart_on_crash = false
+
+

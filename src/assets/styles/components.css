@@ -1,0 +1,204 @@
+/* 按钮 */
+.btn {
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: 500;
+  transition: all var(--animation-normal);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  min-width: 120px;
+  height: 32px;
+  background: var(--control-default);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+}
+
+.btn:hover {
+  background: var(--control-secondary);
+  border-color: var(--border-strong);
+}
+
+.btn:active {
+  background: var(--control-tertiary);
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background: var(--accent-color);
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover {
+  background: var(--accent-dark);
+}
+
+.btn-primary:active {
+  background: var(--accent-light);
+}
+
+/* 卡片 */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--elevation-1);
+  transition: box-shadow var(--animation-normal);
+}
+
+.card:hover {
+  box-shadow: var(--elevation-2);
+}
+
+/* 开关按钮 */
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
+
+.toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background: var(--control-tertiary);
+  transition: var(--animation-normal);
+  border-radius: 20px;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background: white;
+  transition: var(--animation-normal);
+  border-radius: 50%;
+}
+
+.toggle input:checked + .toggle-slider {
+  background: var(--accent-color);
+}
+
+.toggle input:checked + .toggle-slider:before {
+  transform: translateX(20px);
+}
+
+/* 步骤条 */
+.steps {
+  display: flex;
+  gap: var(--space-lg);
+  margin: var(--space-xl) 0;
+}
+
+.step {
+  flex: 1;
+  text-align: center;
+  position: relative;
+}
+
+.step::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: var(--border-default);
+  top: 50%;
+  left: 50%;
+}
+
+/* 输入框 */
+input[type="text"],
+input[type="number"],
+input[type="password"],
+input[type="email"],
+input[type="search"],
+textarea {
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--control-default);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  font-size: 14px;
+  transition: all var(--animation-normal);
+  outline: none;
+  width: 100%;
+}
+
+input[type="text"]:hover,
+input[type="number"]:hover,
+input[type="password"]:hover,
+input[type="email"]:hover,
+input[type="search"]:hover,
+textarea:hover {
+  border-color: var(--border-strong);
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="search"]:focus,
+textarea:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb), 0.1);
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* 搜索框 */
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: var(--control-default);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  transition: all var(--animation-normal);
+}
+
+.search-box:hover {
+  border-color: var(--border-strong);
+}
+
+.search-box:focus-within {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb), 0.1);
+}
+
+.search-box input {
+  border: none;
+  background: none;
+  padding: 0;
+  width: 100%;
+}
+
+.search-box input:focus {
+  box-shadow: none;
+} 

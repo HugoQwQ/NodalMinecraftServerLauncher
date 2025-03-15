@@ -1,0 +1,115 @@
+/* 全局样式 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--bg-default);
+  color: var(--text-primary);
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
+}
+
+/* 文本选择 */
+::selection {
+  background: var(--accent-color);
+  color: white;
+}
+
+/* 输入框文本选择 */
+input, textarea {
+  user-select: text;
+}
+
+/* 布局容器 */
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* 侧边栏 */
+.sidebar {
+  width: 280px;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-default);
+  padding: var(--space-lg);
+  transition: width var(--animation-normal);
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar-collapsed {
+  width: 48px;
+  padding: var(--space-xs);
+}
+
+/* 主内容区 */
+.main-content {
+  margin-left: 280px;
+  flex: 1;
+  padding: var(--space-lg);
+  transition: margin var(--animation-normal);
+}
+
+.main-content-expanded {
+  margin-left: 48px;
+}
+
+/* 网格布局 */
+.grid {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* 弹性布局 */
+.flex {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+/* 间距工具类 */
+.mt-lg { margin-top: var(--space-lg); }
+.mb-lg { margin-bottom: var(--space-lg); }
+.ml-lg { margin-left: var(--space-lg); }
+.mr-lg { margin-right: var(--space-lg); }
+
+.p-lg { padding: var(--space-lg); }
+.px-lg { padding-left: var(--space-lg); padding-right: var(--space-lg); }
+.py-lg { padding-top: var(--space-lg); padding-bottom: var(--space-lg); } 

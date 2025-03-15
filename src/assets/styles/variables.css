@@ -1,0 +1,80 @@
+:root {
+  /* WinUI 3 Colors */
+  --accent-color: #0078D4;
+  --accent-color-rgb: 0, 120, 212;
+  --accent-dark: #005A9E;
+  --accent-light: #429CE3;
+  
+  /* Base Colors */
+  --text-primary: #000000;
+  --text-secondary: #5D5D5D;
+  --text-tertiary: #919191;
+  
+  /* Background Colors */
+  --bg-default: #FFFFFF;
+  --bg-secondary: #F3F3F3;
+  --bg-tertiary: #EFEFEF;
+  --bg-card: #FFFFFF;
+  
+  /* Border Colors */
+  --border-default: #E1E1E1;
+  --border-strong: #CCCCCC;
+  
+  /* Control Colors */
+  --control-default: #FFFFFF;
+  --control-secondary: #F9F9F9;
+  --control-tertiary: #F3F3F3;
+  --control-disabled: #F0F0F0;
+  
+  /* Elevation (Shadow) */
+  --elevation-1: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --elevation-2: 0 4px 8px rgba(0, 0, 0, 0.12);
+  --elevation-3: 0 8px 16px rgba(0, 0, 0, 0.14);
+  
+  /* Animation */
+  --animation-fast: 100ms;
+  --animation-normal: 200ms;
+  --animation-slow: 300ms;
+  
+  /* Layout */
+  --space-xxs: 2px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-xxl: 32px;
+  
+  /* Border Radius */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  
+  /* Font */
+  --font-family: "Segoe UI Variable", "Segoe UI", system-ui, sans-serif;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  --accent-color: #60CDFF;
+  --accent-color-rgb: 96, 205, 255;
+  --accent-dark: #4CC2FF;
+  --accent-light: #8CDAFF;
+  
+  --text-primary: #FFFFFF;
+  --text-secondary: #CCCCCC;
+  --text-tertiary: #999999;
+  
+  --bg-default: #202020;
+  --bg-secondary: #1C1C1C;
+  --bg-tertiary: #282828;
+  --bg-card: #2C2C2C;
+  
+  --border-default: #404040;
+  --border-strong: #515151;
+  
+  --control-default: #2C2C2C;
+  --control-secondary: #333333;
+  --control-tertiary: #3D3D3D;
+  --control-disabled: #2D2D2D;
+} 

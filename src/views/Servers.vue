@@ -116,25 +116,34 @@ const handleServerSettings = async (server: ServerConfig) => {
 
 <style scoped>
 .servers {
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-  }
-
-  .header-actions {
-    display: flex;
-    gap: 0.75rem;
-    align-items: center;
-  }
-
-  .server-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-  }
+  padding: var(--space-lg);
 }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-xl);
+}
+
+.header h1 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.header-actions {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+}
+
+.server-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+</style>
 
 .server-card {
   display: flex;
@@ -254,5 +263,4 @@ const handleServerSettings = async (server: ServerConfig) => {
 
 .btn-icon i {
   font-size: 1rem;
-}
-</style> 
+} 

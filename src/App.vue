@@ -28,24 +28,25 @@ onUnmounted(() => {
 </template>
 
 <style>
-@import './app.css';
-
 .app-container {
   display: flex;
   min-height: 100vh;
   overflow-x: hidden;
+  background-color: var(--bg-default);
 }
 
 .main-content {
   flex: 1;
   margin-left: 250px;
-  padding: 2rem;
-  transition: margin-left var(--transition-speed) ease;
+  padding: 0;
+  transition: all var(--animation-normal);
   width: calc(100% - 250px);
+  min-height: 100vh;
+  background-color: var(--bg-default);
 }
 
 .main-content-expanded {
-  margin-left: 90px;
-  width: calc(100% - 90px);
+  margin-left: 60px;
+  width: calc(100% - 60px);
 }
 </style>

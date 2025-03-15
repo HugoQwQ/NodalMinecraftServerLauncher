@@ -30,7 +30,7 @@
     <div 
       v-if="isCollapsed && tooltipVisible" 
       class="global-tooltip"
-      :class="{ active: isActiveRoute }"
+      :class="{ active: isActiveRoute, visible: tooltipVisible }"
       :style="tooltipStyle"
     >
       {{ tooltipText }}
@@ -55,7 +55,12 @@ const isCollapsed = ref(props.modelValue ?? false)
 
 const tooltipVisible = ref(false)
 const tooltipText = ref('')
-const tooltipStyle = ref({
+const tooltipStyle = ref<{
+  top: string;
+  left: string;
+  transform?: string;
+  opacity?: string;
+}>({
   top: '0px',
   left: '0px'
 })
@@ -79,10 +84,19 @@ const showTooltip = (event: MouseEvent, item: { name: string, path: string }) =>
   tooltipText.value = item.name
   tooltipStyle.value = {
     top: `${rect.top + rect.height / 2}px`,
-    left: `${rect.right + 10}px`
+    left: `${rect.right + 10}px`,
+    transform: 'translateY(-50%)',
+    opacity: '0'
   }
   isActiveRoute.value = currentPath.value === item.path
   tooltipVisible.value = true
+
+  // 强制重绘以触发过渡动画
+  requestAnimationFrame(() => {
+    if (tooltipStyle.value) {
+      tooltipStyle.value.opacity = '1'
+    }
+  })
 }
 
 const hideTooltip = () => {
@@ -107,14 +121,20 @@ watch(() => props.modelValue, (newValue) => {
   background-color: var(--bg-color);
   color: var(--text-color);
   padding: 0.5rem 0.75rem;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   font-size: 0.875rem;
   white-space: nowrap;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  border: 1px solid var(--border-color);
+  box-shadow: var(--elevation-1);
+  border: 1px solid var(--border-default);
   pointer-events: none;
   z-index: 9999;
   transform: translateY(-50%);
+  opacity: 0;
+  transition: all var(--animation-normal) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.global-tooltip.visible {
+  opacity: 1;
 }
 
 .global-tooltip::before {
@@ -125,7 +145,8 @@ watch(() => props.modelValue, (newValue) => {
   transform: translateY(-50%);
   border-style: solid;
   border-width: 6px 6px 6px 0;
-  border-color: transparent var(--border-color) transparent transparent;
+  border-color: transparent var(--border-default) transparent transparent;
+  transition: all var(--animation-normal) cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .global-tooltip::after {
@@ -137,60 +158,62 @@ watch(() => props.modelValue, (newValue) => {
   border-style: solid;
   border-width: 5px 5px 5px 0;
   border-color: transparent var(--bg-color) transparent transparent;
+  transition: all var(--animation-normal) cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .global-tooltip.active {
-  background-color: var(--primary-color);
+  background-color: var(--accent-color);
   color: white;
-  border-color: var(--primary-color);
+  border-color: var(--accent-color);
 }
 
 .global-tooltip.active::before {
-  border-right-color: var(--primary-color);
+  border-right-color: var(--accent-color);
 }
 
 .global-tooltip.active::after {
-  border-right-color: var(--primary-color);
+  border-right-color: var(--accent-color);
 }
 </style>
 
 <style scoped>
 .sidebar {
   width: 250px;
-  background-color: var(--sidebar-bg);
-  border-right: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+  border-right: 1px solid var(--border-default);
   height: 100vh;
   position: fixed;
   left: 0;
   top: 0;
-  transition: width var(--transition-speed) ease;
+  transition: all var(--animation-normal) cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
   z-index: 100;
   overflow: hidden;
+  box-shadow: var(--elevation-1);
 }
 
 .sidebar-collapsed {
-  width: 100px;
+  width: 60px;
 }
 
 .sidebar-header {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: 1rem;
-  border-bottom: 1px solid var(--border-color);
+  padding: var(--space-lg);
+  border-bottom: 1px solid var(--border-default);
   min-height: 64px;
 }
 
 .sidebar-collapsed .sidebar-header {
   justify-content: center;
-  padding: 0.5rem 1rem;
+  padding: var(--space-sm);
 }
 
 .logo {
   height: 40px;
-  transition: all var(--transition-speed) ease;
+  transition: all var(--animation-normal) cubic-bezier(0.4, 0, 0.2, 1);
   margin-right: auto;
 }
 
@@ -206,14 +229,14 @@ watch(() => props.modelValue, (newValue) => {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  transition: background-color var(--transition-speed) ease;
+  transition: all var(--animation-normal) cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .collapse-btn:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: var(--bg-tertiary);
 }
 
 .sidebar-nav {
@@ -228,33 +251,53 @@ watch(() => props.modelValue, (newValue) => {
   padding: 0.75rem 1rem;
   color: var(--text-color);
   text-decoration: none;
-  transition: all var(--transition-speed) ease;
+  transition: all var(--animation-normal) cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 8px;
   margin: 0.25rem;
   white-space: nowrap;
   min-height: 48px;
   width: calc(100% - 0.5rem);
+  position: relative;
+  overflow: hidden;
 }
 
-.nav-item:hover {
-  background-color: rgba(var(--primary-color-rgb), 0.1);
+.nav-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--accent-color);
+  opacity: 0;
+  transition: opacity var(--animation-normal) cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+
+.nav-item:hover::before {
+  opacity: 0.1;
 }
 
 .nav-item.active {
-  background-color: var(--primary-color);
-  color: white;
+  color: var(--accent-color);
+  font-weight: 500;
+}
+
+.nav-item.active::before {
+  opacity: 0.1;
 }
 
 .nav-text {
   margin-left: 1rem;
   opacity: 1;
-  transition: opacity var(--transition-speed) ease;
+  transition: all var(--animation-normal) cubic-bezier(0.4, 0, 0.2, 1);
   white-space: nowrap;
 }
 
 .sidebar-collapsed .nav-text {
   opacity: 0;
   width: 0;
+  margin-left: 0;
 }
 
 .sidebar-collapsed .nav-item {
@@ -273,6 +316,7 @@ i {
   font-size: 1.2rem;
   min-width: 24px;
   text-align: center;
+  transition: all var(--animation-normal) cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .sidebar-footer {

@@ -44,14 +44,27 @@
 </template>
 
 <style scoped>
+.plugins {
+  padding: var(--space-lg);
+}
+
 .header {
-  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-xl);
+}
+
+.header h1 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
 }
 
 .header-actions {
   display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
+  gap: var(--space-md);
+  margin-top: 0;
 }
 
 .search-box {

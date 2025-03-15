@@ -82,53 +82,100 @@ const formatMemory = (bytes: number): string => {
 
 <style scoped>
 .dashboard {
-  padding: 1rem;
+  padding: var(--space-lg);
+}
 
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-xl);
+}
+
+.header h1 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-xl);
+  margin-bottom: var(--space-xl);
+}
+
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--elevation-1);
+  transition: box-shadow var(--animation-normal);
+
+  &:hover {
+    box-shadow: var(--elevation-2);
   }
 
-  .dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-md);
   }
 }
 
 .status-info {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-top: 1rem;
+  gap: var(--space-lg);
+  margin-top: var(--space-md);
+
+  .info {
+    p {
+      margin: var(--space-xs) 0;
+      color: var(--text-secondary);
+    }
+  }
 }
 
 .fas {
-  font-size: 1.5rem;
-  color: var(--primary-color);
+  font-size: 24px;
+  color: var(--accent-color);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
 }
 
 .resource-info {
-  margin-top: 1rem;
+  margin-top: var(--space-lg);
 }
 
 .resource-item {
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-lg);
+
+  span {
+    color: var(--text-secondary);
+    font-size: 14px;
+  }
 }
 
 .progress-bar {
   height: 8px;
-  background-color: var(--border-color);
-  border-radius: 4px;
-  margin-top: 0.5rem;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  margin-top: var(--space-xs);
+  overflow: hidden;
 }
 
 .progress {
   height: 100%;
-  background-color: var(--primary-color);
-  border-radius: 4px;
-  transition: width 0.3s ease;
+  background-color: var(--accent-color);
+  border-radius: var(--radius-sm);
+  transition: width var(--animation-normal);
 }
 </style> 
